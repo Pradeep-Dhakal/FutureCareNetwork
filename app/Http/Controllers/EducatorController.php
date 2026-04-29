@@ -14,39 +14,51 @@ class EducatorController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name'              => 'required|string|max:255',
-            'email'             => 'required|email|max:255',
-            'phone'             => 'nullable|string|max:20',
-            'suburb'            => 'required|string|max:100',
-            'postcode'          => 'required|string|max:10',
-            'state'             => 'required|string|max:10',
-            'qualification'     => 'required|string|max:255',
-            'blue_card_number'  => 'nullable|string|max:50',
-            'blue_card_expiry'  => 'nullable|date',
-            'insurance_status'  => 'required|in:valid,pending,none',
-            'care_types'        => 'nullable|array',
-            'care_types.*'      => 'string',
-            'availability'      => 'nullable|array',
-            'availability.*'    => 'string',
-            'max_children'      => 'required|integer|min:1|max:10',
-            'age_groups'        => 'nullable|string|max:255',
-            'training_needs'    => 'nullable|array',
-            'training_needs.*'  => 'string',
+        $request->validate([
+            'name'                => 'required|string|max:255',
+            'email'               => 'required|email|max:255',
+            'phone'               => 'nullable|string|max:20',
+            'suburb'              => 'required|string|max:100',
+            'postcode'            => 'required|string|max:10',
+            'state'               => 'required|string|max:10',
+            'qualification'       => 'required|string|max:255',
+            'blue_card_number'    => 'nullable|string|max:50',
+            'blue_card_expiry'    => 'nullable|date',
+            'insurance_status'    => 'required|in:valid,pending,none',
+            'care_types'          => 'nullable|array',
+            'availability'        => 'nullable|array',
+            'max_children'        => 'required|integer|min:1|max:10',
+            'age_groups'          => 'nullable|string|max:255',
+            'training_needs'      => 'nullable|array',
             'service_description' => 'nullable|string|max:1000',
-            'privacy_consent'   => 'required|accepted',
+            'privacy_consent'     => 'required|accepted',
         ], [
             'privacy_consent.accepted' => 'You must accept the privacy consent to register.',
+            'privacy_consent.required' => 'You must accept the privacy consent to register.',
         ]);
 
-        $validated['reference_number'] = Educator::generateReference();
-        $validated['privacy_consent']  = true;
-        $validated['status']           = 'pending';
+        Educator::create([
+            'reference_number'    => Educator::generateReference(),
+            'name'                => $request->name,
+            'email'               => $request->email,
+            'phone'               => $request->phone,
+            'suburb'              => $request->suburb,
+            'postcode'            => $request->postcode,
+            'state'               => $request->state,
+            'qualification'       => $request->qualification,
+            'blue_card_number'    => $request->blue_card_number,
+            'blue_card_expiry'    => $request->blue_card_expiry,
+            'insurance_status'    => $request->insurance_status,
+            'care_types'          => $request->care_types ?? [],
+            'availability'        => $request->availability ?? [],
+            'max_children'        => (int) $request->max_children,
+            'age_groups'          => $request->age_groups,
+            'training_needs'      => $request->training_needs ?? [],
+            'service_description' => $request->service_description,
+            'privacy_consent'     => true,
+            'status'              => 'pending',
+        ]);
 
-        $educator = Educator::create($validated);
-
-        return redirect()->route('educator.register')
-            ->with('success', true)
-            ->with('reference', $educator->reference_number);
+        return redirect()->route('educator.success');
     }
 }

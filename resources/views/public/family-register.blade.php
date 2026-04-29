@@ -28,23 +28,7 @@
 
 <div class="container py-4" style="max-width:720px;">
 
-  {{-- SUCCESS --}}
-  @if(session('success'))
-  <div class="alert alert-success-fcn p-4 mb-4">
-    <div class="d-flex align-items-center gap-3">
-      <span style="font-size:2rem;">✅</span>
-      <div>
-        <h5 class="fw-bold mb-1" style="color:#0D7C7C;">Registration Submitted!</h5>
-        <p class="mb-1">Your reference number is <strong>{{ session('reference') }}</strong></p>
-        <p class="mb-0 small text-muted">We'll notify you when a matched educator is found in your area.</p>
-      </div>
-    </div>
-    <div class="mt-3">
-      <a href="{{ route('home') }}" class="btn btn-sm btn-fcn-primary me-2">← Back to Home</a>
-      <a href="{{ route('educator.register') }}" class="btn btn-sm btn-fcn-outline">View Educators</a>
-    </div>
-  </div>
-  @endif
+
 
   {{-- ERRORS --}}
   @if($errors->any())
@@ -61,8 +45,8 @@
     This platform collects structured data to help match your family with the right care and to support government funding decisions for your region.
   </div>
 
-  <form method="POST" action="{{ route('family.store') }}" id="familyForm" novalidate>
-    @csrf
+<form method="POST" action="{{ route('family.store') }}">   
+   @csrf
 
     {{-- PARENT DETAILS --}}
     <div class="form-card mb-3">
@@ -102,7 +86,7 @@
         </div>
         <div class="col-12">
           <label class="form-label">Street Address</label>
-          <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Street address (optional)">
+          <input type="text" name="street_address" class="form-control" value="{{ old('street_address') }}" placeholder="Street address (optional)">
         </div>
       </div>
     </div>
@@ -138,8 +122,7 @@
       </div>
       <div class="mt-3">
         <label class="form-label">Special needs or considerations</label>
-        <textarea name="address" class="form-control" rows="2" placeholder="e.g. dietary requirements, health conditions, language needs..."></textarea>
-      </div>
+        <textarea name="special_needs" class="form-control" rows="2" placeholder="e.g. dietary requirements, health conditions, language needs...">{{ old('special_needs') }}</textarea></div>
     </div>
 
     {{-- CARE PREFERENCES --}}
@@ -212,17 +195,4 @@
     </div>
   </form>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-(function(){
-  'use strict';
-  const form = document.getElementById('familyForm');
-  form.addEventListener('submit', function(e) {
-    if (!form.checkValidity()) { e.preventDefault(); e.stopPropagation(); }
-    form.classList.add('was-validated');
-  });
-})();
-</script>
 @endsection

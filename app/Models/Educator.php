@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\FamilyMatch;
+use Carbon\Carbon;
 
 class Educator extends Model
 {
@@ -28,7 +28,7 @@ class Educator extends Model
 
     public function matches()
     {
-    return $this->hasMany(Carematch::class);
+        return $this->hasMany(CareMatch::class);
     }
 
     public static function generateReference(): string
@@ -36,7 +36,6 @@ class Educator extends Model
         do {
             $ref = 'FCN-E-' . strtoupper(substr(md5(uniqid()), 0, 6));
         } while (self::where('reference_number', $ref)->exists());
-
         return $ref;
     }
 
@@ -45,7 +44,6 @@ class Educator extends Model
         if (!$this->blue_card_expiry) return 'missing';
         if ($this->blue_card_expiry->isPast()) return 'expired';
         if ($this->blue_card_expiry->diffInDays(now()) <= 30) return 'expiring';
-
         return 'valid';
     }
 
