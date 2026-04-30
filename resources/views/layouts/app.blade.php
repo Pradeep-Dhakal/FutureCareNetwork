@@ -49,9 +49,22 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('family.register') }}">For Families</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('educator.register') }}">For Educators</a></li>
-        <li class="nav-item ms-2">
-          <a class="btn btn-sm btn-fcn-primary px-3" href="{{ route('family.register') }}">Get Started</a>
-        </li>
+      <li class="nav-item ms-2">
+  <div class="dropdown">
+    <button class="btn btn-sm btn-fcn-outline px-3 dropdown-toggle me-1" type="button" data-bs-toggle="dropdown">
+      Login
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="{{ route('family.login') }}">🏠 Family Login</a></li>
+      <li><a class="dropdown-item" href="{{ route('educator.login') }}">👩‍🏫 Educator Login</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{{ route('admin.login') }}">📊 Admin Login</a></li>
+    </ul>
+  </div>
+</li>
+<li class="nav-item ms-1">
+  <a class="btn btn-sm btn-fcn-primary px-3" href="{{ route('family.register') }}">Get Started</a>
+</li>
       </ul>
     </div>
   </div>
@@ -64,7 +77,7 @@
 <footer class="py-4 mt-5">
   <div class="container text-center">
     <p class="mb-1">© 2026 Future Care Network — Inspiring Innovative Approaches to Regional Childcare</p>
-    <p class="mb-0">Built by Agile Avengers | CSC6200 UniSQ | Angela Cochrane, Founder</p>
+    <p class="mb-0">Built by Team Agile Avengers | CSC6200 UniSQ | Angela Cochrane, Founder</p>
   </div>
 </footer>
 

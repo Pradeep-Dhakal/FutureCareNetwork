@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
-class Educator extends Model
+class Educator extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
-        'reference_number', 'name', 'email', 'phone', 'suburb', 'postcode',
-        'state', 'qualification', 'blue_card_number', 'blue_card_expiry',
-        'insurance_status', 'care_types', 'availability', 'max_children',
-        'age_groups', 'training_needs', 'service_description',
-        'privacy_consent', 'status',
+        'reference_number', 'name', 'email', 'password', 'phone',
+        'suburb', 'postcode', 'state', 'qualification',
+        'blue_card_number', 'blue_card_expiry', 'insurance_status',
+        'care_types', 'availability', 'max_children', 'age_groups',
+        'training_needs', 'service_description', 'privacy_consent', 'status',
     ];
+
+    protected $hidden = ['password'];
 
     protected $casts = [
         'care_types'       => 'array',
@@ -24,6 +26,7 @@ class Educator extends Model
         'training_needs'   => 'array',
         'privacy_consent'  => 'boolean',
         'blue_card_expiry' => 'date',
+        'password'         => 'hashed',
     ];
 
     public function matches()

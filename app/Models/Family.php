@@ -2,25 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Family extends Model
+class Family extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
-        'reference_number', 'parent_name', 'email', 'phone', 'address',
-        'suburb', 'postcode', 'state', 'children_count', 'children_ages',
-        'care_type', 'days_required', 'preferred_start_date',
+        'reference_number', 'parent_name', 'email', 'password', 'phone',
+        'address', 'suburb', 'postcode', 'state', 'children_count',
+        'children_ages', 'care_type', 'days_required', 'preferred_start_date',
         'cultural_preferences', 'wait_time', 'privacy_consent', 'status',
     ];
+
+    protected $hidden = ['password'];
 
     protected $casts = [
         'children_ages'        => 'array',
         'days_required'        => 'array',
         'privacy_consent'      => 'boolean',
         'preferred_start_date' => 'date',
+        'password'             => 'hashed',
     ];
 
     public function matches()

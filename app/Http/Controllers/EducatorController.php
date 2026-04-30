@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Educator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class EducatorController extends Controller
 {
@@ -16,7 +17,8 @@ class EducatorController extends Controller
     {
         $request->validate([
             'name'                => 'required|string|max:255',
-            'email'               => 'required|email|max:255',
+            'email'               => 'required|email|unique:educators,email',
+            'password'            => 'required|string|min:8|confirmed',
             'phone'               => 'nullable|string|max:20',
             'suburb'              => 'required|string|max:100',
             'postcode'            => 'required|string|max:10',
@@ -33,14 +35,17 @@ class EducatorController extends Controller
             'service_description' => 'nullable|string|max:1000',
             'privacy_consent'     => 'required|accepted',
         ], [
+            'email.unique'             => 'This email is already registered. Please login instead.',
+            'password.confirmed'       => 'Passwords do not match.',
+            'password.min'             => 'Password must be at least 8 characters.',
             'privacy_consent.accepted' => 'You must accept the privacy consent to register.',
-            'privacy_consent.required' => 'You must accept the privacy consent to register.',
         ]);
 
         Educator::create([
             'reference_number'    => Educator::generateReference(),
             'name'                => $request->name,
             'email'               => $request->email,
+            'password'            => Hash::make($request->password),
             'phone'               => $request->phone,
             'suburb'              => $request->suburb,
             'postcode'            => $request->postcode,

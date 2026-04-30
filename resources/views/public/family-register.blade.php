@@ -67,6 +67,16 @@
           <input type="tel" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="04XX XXX XXX">
         </div>
         <div class="col-md-6">
+  <label class="form-label">Password <span class="text-danger">*</span></label>
+  <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+    placeholder="Minimum 8 characters" required>
+  @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+</div>
+<div class="col-md-6">
+  <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+  <input type="password" name="password_confirmation" class="form-control" placeholder="Repeat password" required>
+</div>
+        <div class="col-md-6">
           <label class="form-label">State <span class="text-danger">*</span></label>
           <select name="state" class="form-select" required>
             @foreach(['QLD','NSW','VIC','WA','SA','NT','TAS','ACT'] as $s)
