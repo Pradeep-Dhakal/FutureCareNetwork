@@ -188,7 +188,7 @@ University of Southern Queensland, Trimester 1, 2026
 | Member | Role |
 |--------|------|
 | Vaidehi Sunilkumar Modi | Systems Analyst |
-| Pradip Dhakal | Backend Developer / Project Leader |
+| Pradip Dhakal | Backend Developer|
 | Vedant Patel | Software Architect |
 | Shreya Shridhar Jadhav | Data & Analytics Specialist |
 
